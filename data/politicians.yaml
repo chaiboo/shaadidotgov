@@ -1,0 +1,420 @@
+# Parliament Kundli -- curated birth data
+#
+# Birth DATES are well-sourced (Wikipedia / ECI affidavits / official bio).
+# Birth TIMES are almost never public. We default to 12:00 local (noon) as
+# an honest "chart mahurat" and flag any figure where the astrology press
+# has circulated a more specific time. Moon moves ~13 degrees/day, so a
+# noon default keeps the moon-nakshatra right unless the Moon crossed a
+# nakshatra boundary that day -- those are flagged in `notes`.
+#
+# time_confidence: high | circulated | noon-default
+# tz_offset: hours east of UTC (India = 5.5)
+
+# ---------- Union Cabinet & BJP leadership ----------
+
+- name: Narendra Modi
+  role: Prime Minister
+  party: BJP
+  faction: NDA
+  date: 1950-09-17
+  time: "11:00"
+  tz_offset: 5.5
+  place: Vadnagar, Gujarat
+  time_confidence: circulated
+  notes: "Astrology-press circulated 11:00 IST; widely cited as Scorpio Moon / Anuradha"
+
+- name: Amit Shah
+  role: Home Minister
+  party: BJP
+  faction: NDA
+  date: 1964-10-22
+  time: "12:00"
+  tz_offset: 5.5
+  place: Mumbai
+  time_confidence: noon-default
+
+- name: Rajnath Singh
+  role: Defence Minister
+  party: BJP
+  faction: NDA
+  date: 1951-07-10
+  time: "12:00"
+  tz_offset: 5.5
+  place: Bhabhaura, UP
+  time_confidence: noon-default
+
+- name: Nirmala Sitharaman
+  role: Finance Minister
+  party: BJP
+  faction: NDA
+  date: 1959-08-18
+  time: "12:00"
+  tz_offset: 5.5
+  place: Madurai
+  time_confidence: noon-default
+
+- name: S. Jaishankar
+  role: External Affairs Minister
+  party: BJP
+  faction: NDA
+  date: 1955-01-09
+  time: "12:00"
+  tz_offset: 5.5
+  place: Delhi
+  time_confidence: noon-default
+
+- name: Nitin Gadkari
+  role: Road Transport Minister
+  party: BJP
+  faction: NDA
+  date: 1957-05-27
+  time: "12:00"
+  tz_offset: 5.5
+  place: Nagpur
+  time_confidence: noon-default
+
+- name: J.P. Nadda
+  role: BJP President / Health Minister
+  party: BJP
+  faction: NDA
+  date: 1960-12-02
+  time: "12:00"
+  tz_offset: 5.5
+  place: Patna
+  time_confidence: noon-default
+
+- name: Shivraj Singh Chouhan
+  role: Agriculture Minister
+  party: BJP
+  faction: NDA
+  date: 1959-03-05
+  time: "12:00"
+  tz_offset: 5.5
+  place: Jait, MP
+  time_confidence: noon-default
+
+- name: Manohar Lal Khattar
+  role: Power & Urban Development Minister
+  party: BJP
+  faction: NDA
+  date: 1954-05-05
+  time: "12:00"
+  tz_offset: 5.5
+  place: Nindana, Haryana
+  time_confidence: noon-default
+
+- name: Piyush Goyal
+  role: Commerce Minister
+  party: BJP
+  faction: NDA
+  date: 1964-06-13
+  time: "12:00"
+  tz_offset: 5.5
+  place: Mumbai
+  time_confidence: noon-default
+
+- name: Dharmendra Pradhan
+  role: Education Minister
+  party: BJP
+  faction: NDA
+  date: 1969-06-26
+  time: "12:00"
+  tz_offset: 5.5
+  place: Talcher, Odisha
+  time_confidence: noon-default
+
+# ---------- Chief Ministers (BJP / NDA) ----------
+
+- name: Yogi Adityanath
+  role: CM Uttar Pradesh
+  party: BJP
+  faction: NDA
+  date: 1972-06-05
+  time: "12:00"
+  tz_offset: 5.5
+  place: Panchur, Uttarakhand
+  time_confidence: noon-default
+
+- name: Devendra Fadnavis
+  role: CM Maharashtra
+  party: BJP
+  faction: NDA
+  date: 1970-07-22
+  time: "12:00"
+  tz_offset: 5.5
+  place: Nagpur
+  time_confidence: noon-default
+
+- name: Himanta Biswa Sarma
+  role: CM Assam
+  party: BJP
+  faction: NDA
+  date: 1969-02-01
+  time: "12:00"
+  tz_offset: 5.5
+  place: Jorhat
+  time_confidence: noon-default
+
+- name: Mohan Yadav
+  role: CM Madhya Pradesh
+  party: BJP
+  faction: NDA
+  date: 1965-03-25
+  time: "12:00"
+  tz_offset: 5.5
+  place: Ujjain
+  time_confidence: noon-default
+
+- name: Vishnu Deo Sai
+  role: CM Chhattisgarh
+  party: BJP
+  faction: NDA
+  date: 1964-02-21
+  time: "12:00"
+  tz_offset: 5.5
+  place: Bagiya, Jashpur
+  time_confidence: noon-default
+
+- name: Bhajan Lal Sharma
+  role: CM Rajasthan
+  party: BJP
+  faction: NDA
+  date: 1967-12-15
+  time: "12:00"
+  tz_offset: 5.5
+  place: Atari, Bharatpur
+  time_confidence: noon-default
+
+- name: Pushkar Singh Dhami
+  role: CM Uttarakhand
+  party: BJP
+  faction: NDA
+  date: 1975-09-16
+  time: "12:00"
+  tz_offset: 5.5
+  place: Pithoragarh
+  time_confidence: noon-default
+
+- name: Bhupendra Patel
+  role: CM Gujarat
+  party: BJP
+  faction: NDA
+  date: 1962-07-15
+  time: "12:00"
+  tz_offset: 5.5
+  place: Ahmedabad
+  time_confidence: noon-default
+
+- name: Nayab Singh Saini
+  role: CM Haryana
+  party: BJP
+  faction: NDA
+  date: 1970-01-25
+  time: "12:00"
+  tz_offset: 5.5
+  place: Mirzapur Majra
+  time_confidence: noon-default
+
+- name: Mohan Charan Majhi
+  role: CM Odisha
+  party: BJP
+  faction: NDA
+  date: 1971-10-06
+  time: "12:00"
+  tz_offset: 5.5
+  place: Keonjhar
+  time_confidence: noon-default
+
+- name: Nitish Kumar
+  role: CM Bihar
+  party: JD(U)
+  faction: NDA
+  date: 1951-03-01
+  time: "12:00"
+  tz_offset: 5.5
+  place: Bakhtiarpur
+  time_confidence: noon-default
+
+- name: N. Chandrababu Naidu
+  role: CM Andhra Pradesh
+  party: TDP
+  faction: NDA
+  date: 1950-04-20
+  time: "12:00"
+  tz_offset: 5.5
+  place: Naravaripalli
+  time_confidence: noon-default
+
+# ---------- Chief Ministers (INDIA / opposition) ----------
+
+- name: M.K. Stalin
+  role: CM Tamil Nadu
+  party: DMK
+  faction: INDIA
+  date: 1953-03-01
+  time: "12:00"
+  tz_offset: 5.5
+  place: Chennai
+  time_confidence: noon-default
+
+- name: Mamata Banerjee
+  role: CM West Bengal
+  party: TMC
+  faction: INDIA
+  date: 1955-01-05
+  time: "12:00"
+  tz_offset: 5.5
+  place: Kolkata
+  time_confidence: noon-default
+
+- name: Siddaramaiah
+  role: CM Karnataka
+  party: INC
+  faction: INDIA
+  date: 1947-08-12
+  time: "12:00"
+  tz_offset: 5.5
+  place: Siddaramanahundi
+  time_confidence: noon-default
+
+- name: Revanth Reddy
+  role: CM Telangana
+  party: INC
+  faction: INDIA
+  date: 1967-11-08
+  time: "12:00"
+  tz_offset: 5.5
+  place: Kondareddypalli
+  time_confidence: noon-default
+
+- name: Pinarayi Vijayan
+  role: CM Kerala
+  party: CPI(M)
+  faction: INDIA
+  date: 1944-05-24
+  time: "12:00"
+  tz_offset: 5.5
+  place: Pinarayi, Kannur
+  time_confidence: noon-default
+
+- name: Hemant Soren
+  role: CM Jharkhand
+  party: JMM
+  faction: INDIA
+  date: 1975-08-10
+  time: "12:00"
+  tz_offset: 5.5
+  place: Ramgarh
+  time_confidence: noon-default
+
+- name: Omar Abdullah
+  role: CM Jammu & Kashmir
+  party: JKNC
+  faction: INDIA
+  date: 1970-03-10
+  time: "12:00"
+  tz_offset: 0.0
+  place: Rochford, UK
+  time_confidence: noon-default
+
+# ---------- Opposition leaders ----------
+
+- name: Rahul Gandhi
+  role: Leader of Opposition
+  party: INC
+  faction: INDIA
+  date: 1970-06-19
+  time: "12:00"
+  tz_offset: 5.5
+  place: Delhi
+  time_confidence: noon-default
+
+- name: Mallikarjun Kharge
+  role: INC President
+  party: INC
+  faction: INDIA
+  date: 1942-07-21
+  time: "12:00"
+  tz_offset: 5.5
+  place: Varavatti, Karnataka
+  time_confidence: noon-default
+
+- name: Priyanka Gandhi Vadra
+  role: MP Wayanad
+  party: INC
+  faction: INDIA
+  date: 1972-01-12
+  time: "12:00"
+  tz_offset: 5.5
+  place: Delhi
+  time_confidence: noon-default
+
+- name: Sonia Gandhi
+  role: Former INC President
+  party: INC
+  faction: INDIA
+  date: 1946-12-09
+  time: "12:00"
+  tz_offset: 1.0
+  place: Lusiana, Italy
+  time_confidence: noon-default
+
+- name: Akhilesh Yadav
+  role: SP President
+  party: SP
+  faction: INDIA
+  date: 1973-07-01
+  time: "12:00"
+  tz_offset: 5.5
+  place: Saifai
+  time_confidence: noon-default
+
+- name: Tejashwi Yadav
+  role: Deputy CM Bihar (past) / RJD leader
+  party: RJD
+  faction: INDIA
+  date: 1989-11-09
+  time: "12:00"
+  tz_offset: 5.5
+  place: Patna
+  time_confidence: noon-default
+
+- name: Sharad Pawar
+  role: NCP(SP) Chief
+  party: NCP(SP)
+  faction: INDIA
+  date: 1940-12-12
+  time: "12:00"
+  tz_offset: 5.5
+  place: Baramati
+  time_confidence: noon-default
+
+- name: Uddhav Thackeray
+  role: Shiv Sena (UBT) Chief
+  party: SHS(UBT)
+  faction: INDIA
+  date: 1960-07-27
+  time: "12:00"
+  tz_offset: 5.5
+  place: Mumbai
+  time_confidence: noon-default
+
+- name: Arvind Kejriwal
+  role: AAP National Convenor
+  party: AAP
+  faction: INDIA
+  date: 1968-08-16
+  time: "12:00"
+  tz_offset: 5.5
+  place: Siwani, Haryana
+  time_confidence: noon-default
+
+- name: Asaduddin Owaisi
+  role: AIMIM President
+  party: AIMIM
+  faction: Other
+  date: 1969-05-13
+  time: "12:00"
+  tz_offset: 5.5
+  place: Hyderabad
+  time_confidence: noon-default

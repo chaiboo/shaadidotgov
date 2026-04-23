@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en" data-country="IN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shaadi.gov &middot; should your MP marry your senator</title>
+  <meta name="description" content="Hindu marriage compatibility scoring, applied without permission to the Lok Sabha, the US Congress, and the UK Commons. Real astronomy. Real rules. Wrong application." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..900,30..100;1,9..144,400..900,30..100&family=Syne:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="logo-group" id="logo-group" title="click for a pair the stars endorse">
+      <span class="logo-chandra" aria-hidden="true">
+        <!-- Simple Vedic chandra (crescent moon) with a bindu (dot) -->
+        <svg viewBox="0 0 56 56" width="46" height="46" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+          <!-- Crescent -->
+          <path d="M40 10 a22 22 0 1 0 0 36 a16 16 0 1 1 0 -36 Z" fill="currentColor" opacity="0.92"/>
+          <!-- Bindu (dot) — the point of consciousness -->
+          <circle cx="16" cy="28" r="2.5" fill="currentColor"/>
+          <!-- Small stars for decoration -->
+          <circle cx="8" cy="12" r="1.2" fill="currentColor"/>
+          <circle cx="52" cy="48" r="1.2" fill="currentColor"/>
+          <circle cx="48" cy="8" r="0.9" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="logo-text-block">
+        <span class="logo">Shaadi<span class="amp">.</span>gov</span>
+        <span class="logo-sub">
+          <b>#1 matrimonial app for sitting legislators</b>
+        </span>
+      </span>
+    </a>
+    <nav class="tabs" role="tablist">
+      <button data-tab="matches"  class="tab active" role="tab"><span>matches</span></button>
+      <button data-tab="parties"  class="tab"        role="tab"><span>party &times; party</span></button>
+      <button data-tab="find"     class="tab"        role="tab"><span>pick a victim</span></button>
+      <button data-tab="extremes" class="tab"        role="tab"><span>best &amp; worst</span></button>
+      <button data-tab="grid"     class="tab"        role="tab"><span>the grid</span></button>
+      <button data-tab="signs"    class="tab"        role="tab"><span>moon signs</span></button>
+      <button data-tab="about"    class="tab"        role="tab"><span>why</span></button>
+    </nav>
+  </div>
+  <div class="ticker" id="ticker" aria-hidden="true"></div>
+</header>
+
+<main>
+
+  <div id="country-pills" class="country-pills">
+    <span class="cp-label">Roster</span>
+    <button data-country="IN"  class="cp active">Lok&nbsp;Sabha</button>
+    <button data-country="US"  class="cp">US&nbsp;Congress</button>
+    <button data-country="UK"  class="cp">UK&nbsp;Commons</button>
+    <button data-country="ALL" class="cp">All&nbsp;three</button>
+    <span class="cp-note" id="cp-note"></span>
+  </div>
+
+  <!-- ========== TAB: Matches (hero pair + ribbon) ======================= -->
+  <section id="tab-matches" class="tab-panel active">
+    <div class="panel-head panel-head-inline">
+      <span class="ph-kicker">Tonight's matchmaking</span>
+      <h2>Two legislators, <em>one cosmic verdict.</em></h2>
+      <p class="panel-dek">Reroll for another pair. Pick a mode to stack the deck.</p>
+    </div>
+    <div class="matches-controls">
+      <span class="mc-or">click a name in the card to swap. or, surprise me:</span>
+      <button type="button" class="match-mode active" data-mode="random">random</button>
+      <button type="button" class="match-mode" data-mode="ordained">written in the stars</button>
+      <button type="button" class="match-mode" data-mode="cursed">keep them apart</button>
+      <button type="button" class="match-mode" data-mode="across">across the aisle</button>
+      <button type="button" class="match-mode" data-mode="global">across oceans</button>
+      <button type="button" id="match-reroll" class="match-reroll">
+        <span class="reroll-icon">↻</span> reroll
+      </button>
+    </div>
+    <div id="match-hero" class="match-hero"></div>
+    <div class="match-ribbon-head">
+      <span class="ph-kicker">And also</span>
+    </div>
+    <div id="match-ribbon" class="match-ribbon"></div>
+  </section>
+
+  <!-- ========== TAB: The grid (full-roster matrix) ======================= -->
+  <section id="tab-grid" class="tab-panel">
+    <div class="panel-head panel-head-inline">
+      <span class="ph-kicker">The house, matrimonially</span>
+      <h2>Every legislator in the room, <em>scored against each other.</em></h2>
+      <p class="panel-dek">Out of 36. Click a card or any matrix cell below. Flip the roster up top.</p>
+    </div>
+    <div class="grid-controls">
+      <label>
+        <span>sort</span>
+        <select id="grid-sort">
+          <option value="faction">by bloc</option>
+          <option value="alpha">alphabetical</option>
+          <option value="compat">by avg. compatibility</option>
+          <option value="rashi">by moon sign</option>
+        </select>
+      </label>
+      <label class="filter-cell" data-filter="notable">
+        <span>list</span>
+        <select id="filter-notable"><option value="all">all</option></select>
+      </label>
+      <label class="filter-cell" data-filter="bloc">
+        <span>bloc</span>
+        <select id="filter-bloc"><option value="all">all</option></select>
+      </label>
+      <label class="filter-cell" data-filter="party">
+        <span>party</span>
+        <select id="filter-party"><option value="all">all</option></select>
+      </label>
+      <label class="filter-cell" data-filter="state">
+        <span>state</span>
+        <select id="filter-state"><option value="all">all</option></select>
+      </label>
+      <label class="filter-cell" data-filter="gender">
+        <span>gender</span>
+        <select id="filter-gender"><option value="all">all</option></select>
+      </label>
+      <label class="filter-cell" data-filter="age">
+        <span>age</span>
+        <select id="filter-age"><option value="all">all</option></select>
+      </label>
+      <label class="filter-cell" data-filter="sign">
+        <span>moon sign</span>
+        <select id="filter-sign"><option value="all">all</option></select>
+      </label>
+      <button type="button" id="filter-reset" class="filter-reset" title="clear all filters">reset</button>
+    </div>
+    <div id="grid-unsupported" class="panel-empty" hidden></div>
+    <div id="matrix" class="matrix-holder"></div>
+    <div class="legend">
+      <div class="scale"><span>5</span><div class="bar"></div><span>36</span></div>
+      <div class="scale-labels">
+        <span>do not</span><span>technically allowed</span><span>pandit approves</span><span>written in the stars</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TAB: Party heatmap ======================= -->
+  <section id="tab-parties" class="tab-panel">
+    <div class="panel-head">
+      <span class="ph-kicker">Party &times; party</span>
+      <h2>If your in-laws <em>ran for parliament.</em></h2>
+      <p class="panel-dek">
+        Average compatibility between the top parties, pair by pair. Hover for the average; click for a sample introduction.
+      </p>
+      <!-- Saturn with a tiny face and rings, tucked top-right -->
+      <span class="celestial ph-celestial ph-saturn" aria-hidden="true">
+        <svg viewBox="0 0 100 90" width="100" height="90">
+          <!-- Ring — back half drawn first -->
+          <ellipse cx="50" cy="45" rx="44" ry="9"
+                   fill="none" stroke="var(--ink)" stroke-width="2"/>
+          <ellipse cx="50" cy="45" rx="44" ry="9"
+                   fill="none" stroke="var(--brass)" stroke-width="4"
+                   stroke-dasharray="4 3" opacity="0.9"/>
+          <!-- Planet body -->
+          <circle cx="50" cy="45" r="22" fill="var(--terracotta)" stroke="var(--ink)" stroke-width="2"/>
+          <!-- Planet stripes -->
+          <path d="M30 41 Q50 38 70 41" fill="none" stroke="var(--rust)" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+          <path d="M30 50 Q50 52 70 50" fill="none" stroke="var(--rust)" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+          <!-- Front ring half (on top of planet) -->
+          <path d="M6 45 Q50 60 94 45"
+                fill="none" stroke="var(--brass)" stroke-width="4" stroke-linecap="round"/>
+          <path d="M6 45 Q50 60 94 45"
+                fill="none" stroke="var(--ink)" stroke-width="1.2"/>
+          <!-- Face on planet -->
+          <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round">
+            <circle cx="43" cy="43" r="1.6" fill="var(--ink)"/>
+            <circle cx="57" cy="43" r="1.6" fill="var(--ink)"/>
+            <path d="M44 49 Q50 52 56 49"/>
+          </g>
+          <!-- Tiny star nearby -->
+          <polygon points="86,15 88,20 93,20 89,24 91,29 86,26 81,29 83,24 79,20 84,20"
+            fill="var(--brass)" stroke="var(--ink)" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </div>
+    <p class="caption" id="parties-note"></p>
+    <div id="parties-holder" class="pxp-holder"></div>
+  </section>
+
+  <!-- ========== TAB: Find someone ======================= -->
+  <section id="tab-find" class="tab-panel">
+    <div class="panel-head">
+      <span class="ph-kicker">The matchmaking desk</span>
+      <h2>Pick a <em>victim.</em></h2>
+      <p class="panel-dek">
+        Find any legislator in the active roster. You'll get their top-10 celestial matches, bottom-10, and average fit with each bloc. Roughly the information an aunty needs to arrange a wedding.
+      </p>
+      <!-- A little hand holding a magnifying glass with a star inside it -->
+      <span class="celestial ph-celestial ph-looker" aria-hidden="true">
+        <svg viewBox="0 0 100 90" width="100" height="90">
+          <!-- Magnifier handle -->
+          <line x1="72" y1="58" x2="92" y2="78"
+                stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/>
+          <line x1="72" y1="58" x2="92" y2="78"
+                stroke="var(--brass)" stroke-width="3" stroke-linecap="round"/>
+          <!-- Magnifier lens -->
+          <circle cx="50" cy="36" r="28" fill="var(--cream-hi)" stroke="var(--ink)" stroke-width="2.5"/>
+          <!-- Star inside lens, with a face -->
+          <g transform="translate(50 36)">
+            <polygon points="0,-16 4.8,-5 16,-5 7,2 10.5,13 0,6 -10.5,13 -7,2 -16,-5 -4.8,-5"
+                     fill="var(--brass)" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="-3" cy="-2" r="1" fill="var(--ink)"/>
+            <circle cx="3" cy="-2" r="1" fill="var(--ink)"/>
+            <path d="M-3 3 Q0 5 3 3" fill="none" stroke="var(--ink)" stroke-width="1.3" stroke-linecap="round"/>
+          </g>
+          <!-- Highlight on lens -->
+          <path d="M30 24 Q36 20 44 22" fill="none" stroke="var(--page)" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        </svg>
+      </span>
+    </div>
+    <div class="search-wrap">
+      <input type="search" id="mp-search" placeholder="Name, state, or party&hellip;" />
+      <ul id="mp-results"></ul>
+    </div>
+    <div id="mp-panel" class="mp-panel"></div>
+  </section>
+
+  <!-- ========== TAB: Extremes ======================= -->
+  <section id="tab-extremes" class="tab-panel">
+    <div class="panel-head">
+      <span class="ph-kicker">The extremes</span>
+      <h2>The stars <em>have opinions.</em></h2>
+      <p class="panel-dek">
+        Every possible pair in the active roster (<span id="pair-total">&mdash;</span> of them), ranked. The ten the stars want married; the ten they want kept in separate rooms.
+      </p>
+      <!-- Two faces: a happy sun and a grumpy moon, side by side -->
+      <span class="celestial ph-celestial ph-duo" aria-hidden="true">
+        <svg viewBox="0 0 120 90" width="120" height="90">
+          <!-- Happy sun on left -->
+          <g transform="translate(35 42)">
+            <g fill="var(--brass)" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round">
+              <path d="M0 -30 L-3 -18 L3 -18 Z"/>
+              <path d="M0 30 L-3 18 L3 18 Z"/>
+              <path d="M-30 0 L-18 -3 L-18 3 Z"/>
+              <path d="M30 0 L18 -3 L18 3 Z"/>
+              <path d="M-21 -21 L-12 -15 L-15 -12 Z"/>
+              <path d="M21 21 L12 15 L15 12 Z"/>
+              <path d="M-21 21 L-12 15 L-15 12 Z"/>
+              <path d="M21 -21 L12 -15 L15 -12 Z"/>
+            </g>
+            <circle r="14" fill="var(--brass)" stroke="var(--ink)" stroke-width="1.8"/>
+            <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round">
+              <path d="M-5 -3 Q-3 -1 -1 -3"/>
+              <path d="M1 -3 Q3 -1 5 -3"/>
+              <path d="M-5 4 Q0 8 5 4"/>
+            </g>
+            <circle cx="-6" cy="1" r="1.5" fill="var(--terracotta)" opacity="0.8"/>
+            <circle cx="6" cy="1" r="1.5" fill="var(--terracotta)" opacity="0.8"/>
+          </g>
+          <!-- Grumpy moon on right -->
+          <g transform="translate(85 42)">
+            <path d="M8 -16 a16 16 0 1 0 0 32 a12 12 0 1 1 0 -32 Z"
+                  fill="var(--plum)" stroke="var(--ink)" stroke-width="1.8" stroke-linejoin="round"/>
+            <g fill="none" stroke="var(--cream-hi)" stroke-width="1.5" stroke-linecap="round">
+              <!-- angry eyebrows + eyes -->
+              <path d="M-4 -8 L1 -6"/>
+              <path d="M5 -8 L10 -6"/>
+              <circle cx="-1" cy="-3" r="1" fill="var(--cream-hi)" stroke="none"/>
+              <circle cx="8" cy="-3" r="1" fill="var(--cream-hi)" stroke="none"/>
+              <!-- frown -->
+              <path d="M-2 6 Q4 3 10 6"/>
+            </g>
+          </g>
+        </svg>
+      </span>
+    </div>
+    <div class="pp-columns">
+      <div>
+        <h4 class="pp-h pp-h-top">Written in the stars</h4>
+        <div id="extremes-top" class="pp-list"></div>
+      </div>
+      <div>
+        <h4 class="pp-h pp-h-bot">Do not seat together</h4>
+        <div id="extremes-bot" class="pp-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TAB: Moon signs ======================= -->
+  <section id="tab-signs" class="tab-panel">
+    <div class="panel-head">
+      <span class="ph-kicker">Lunar demography</span>
+      <h2>Which signs <em>get elected?</em></h2>
+      <p class="panel-dek">
+        One bar per sign. If birthdays were random, each sign would hold about a twelfth of the chamber. They aren't quite, and they don't. Whether that means anything is between you and your astrologer.
+      </p>
+      <!-- A lion (Leo) and a fish (Pisces) zodiac line-drawings -->
+      <span class="celestial ph-celestial ph-zodiac" aria-hidden="true">
+        <svg viewBox="0 0 130 90" width="130" height="90">
+          <!-- Lion head (Leo) -->
+          <g transform="translate(38 44)">
+            <!-- Mane: 8 pointed petals -->
+            <g fill="var(--brass)" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round">
+              <path d="M0 -26 Q-6 -20 0 -16 Q6 -20 0 -26 Z"/>
+              <path d="M0 -26 Q-6 -20 0 -16 Q6 -20 0 -26 Z" transform="rotate(45)"/>
+              <path d="M0 -26 Q-6 -20 0 -16 Q6 -20 0 -26 Z" transform="rotate(90)"/>
+              <path d="M0 -26 Q-6 -20 0 -16 Q6 -20 0 -26 Z" transform="rotate(135)"/>
+              <path d="M0 -26 Q-6 -20 0 -16 Q6 -20 0 -26 Z" transform="rotate(180)"/>
+              <path d="M0 -26 Q-6 -20 0 -16 Q6 -20 0 -26 Z" transform="rotate(225)"/>
+              <path d="M0 -26 Q-6 -20 0 -16 Q6 -20 0 -26 Z" transform="rotate(270)"/>
+              <path d="M0 -26 Q-6 -20 0 -16 Q6 -20 0 -26 Z" transform="rotate(315)"/>
+            </g>
+            <!-- Lion face -->
+            <circle r="13" fill="var(--terracotta)" stroke="var(--ink)" stroke-width="1.8"/>
+            <!-- Ears -->
+            <path d="M-8 -13 L-10 -17 L-5 -15 Z" fill="var(--terracotta)" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M8 -13 L10 -17 L5 -15 Z" fill="var(--terracotta)" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round"/>
+            <!-- Face details -->
+            <g fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="-4" cy="-2" r="1.3" fill="var(--ink)"/>
+              <circle cx="4" cy="-2" r="1.3" fill="var(--ink)"/>
+              <!-- nose -->
+              <path d="M-1.5 3 L0 5 L1.5 3 Z" fill="var(--ink)" stroke="none"/>
+              <!-- mouth -->
+              <path d="M0 5 L0 7"/>
+              <path d="M0 7 Q-3 8 -4 7"/>
+              <path d="M0 7 Q3 8 4 7"/>
+              <!-- whiskers -->
+              <path d="M-4 5 L-10 4"/>
+              <path d="M-4 6 L-10 7"/>
+              <path d="M4 5 L10 4"/>
+              <path d="M4 6 L10 7"/>
+            </g>
+          </g>
+          <!-- Fish (Pisces) -->
+          <g transform="translate(96 48)">
+            <!-- Body -->
+            <path d="M-18 0 Q-10 -12 0 -10 Q10 -7 16 0 Q10 7 0 10 Q-10 12 -18 0 Z"
+                  fill="var(--plum)" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/>
+            <!-- Tail -->
+            <path d="M16 0 L26 -10 L24 0 L26 10 Z"
+                  fill="var(--plum)" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/>
+            <!-- Scale curves -->
+            <path d="M-4 -5 Q-2 -2 -4 1" fill="none" stroke="var(--cream-hi)" stroke-width="1.2" opacity="0.7"/>
+            <path d="M2 -6 Q4 -2 2 2" fill="none" stroke="var(--cream-hi)" stroke-width="1.2" opacity="0.7"/>
+            <path d="M8 -5 Q10 -1 8 3" fill="none" stroke="var(--cream-hi)" stroke-width="1.2" opacity="0.7"/>
+            <!-- Eye -->
+            <circle cx="-12" cy="-2" r="2.5" fill="var(--cream-hi)" stroke="var(--ink)" stroke-width="1.3"/>
+            <circle cx="-12" cy="-2" r="1.1" fill="var(--ink)"/>
+            <!-- Smile -->
+            <path d="M-16 3 Q-13 6 -10 4" fill="none" stroke="var(--cream-hi)" stroke-width="1.4" stroke-linecap="round"/>
+            <!-- Fin -->
+            <path d="M0 -10 L3 -14 L6 -10" fill="var(--plum)" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round"/>
+          </g>
+        </svg>
+      </span>
+    </div>
+    <div class="signs-layout">
+      <div id="signs-wheel" class="signs-wheel" aria-hidden="true"></div>
+      <div id="signs-chart" class="sign-chart"></div>
+    </div>
+    <p class="caption" id="signs-caption"></p>
+  </section>
+
+  <!-- ========== TAB: About ======================= -->
+  <section id="tab-about" class="tab-panel">
+    <div class="about-inner">
+      <div class="panel-head">
+        <span class="ph-kicker">Colophon</span>
+        <h2><em>Why.</em></h2>
+        <!-- Comet with a face -->
+        <span class="celestial ph-celestial ph-comet" aria-hidden="true">
+          <svg viewBox="0 0 140 90" width="140" height="90">
+            <!-- Tail: three wavy streaks -->
+            <path d="M10 40 Q40 20 70 50" fill="none" stroke="var(--brass)" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
+            <path d="M14 55 Q44 38 70 50" fill="none" stroke="var(--terracotta)" stroke-width="3.5" stroke-linecap="round" opacity="0.85"/>
+            <path d="M18 28 Q46 15 70 50" fill="none" stroke="var(--plum)" stroke-width="2.8" stroke-linecap="round" opacity="0.7"/>
+            <!-- Comet head (star with face) -->
+            <g transform="translate(90 48)">
+              <polygon points="0,-22 6,-6 22,-6 10,4 14,20 0,10 -14,20 -10,4 -22,-6 -6,-6"
+                       fill="var(--brass)" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/>
+              <g fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round">
+                <circle cx="-4" cy="-1" r="1.5" fill="var(--ink)"/>
+                <circle cx="4" cy="-1" r="1.5" fill="var(--ink)"/>
+                <path d="M-4 5 Q0 8 4 5"/>
+              </g>
+              <circle cx="-6" cy="3" r="1.4" fill="var(--terracotta)" opacity="0.8"/>
+              <circle cx="6" cy="3" r="1.4" fill="var(--terracotta)" opacity="0.8"/>
+            </g>
+          </svg>
+        </span>
+      </div>
+      <p>
+        Ashtakoot Guna Milan is the eight-point compatibility scoring
+        that North Indian families use to decide whether two horoscopes
+        should result in a wedding. It compares two birth charts and
+        returns a number out of 36. Eighteen and up is a match; below
+        that, the usual response is to find someone else. Here it is
+        applied, without the consent of any party involved, to every
+        sitting legislator in three houses: the 18th Lok Sabha, the
+        119th US Congress, and the 2024 UK Commons.
+      </p>
+      <p>
+        The premise is silly. The astronomy is not. Moon positions are
+        real, the nakshatras are where they're meant to be, and the
+        rules come verbatim from a book your grandmother may own.
+      </p>
+
+      <h3>What the eight koots check</h3>
+      <ul class="koot-list">
+        <li><strong>Varna</strong> <span class="kl-pt">1 pt</span> &mdash; a caste hierarchy assigned by moon sign. The groom is not supposed to rank below the bride.</li>
+        <li><strong>Vashya</strong> <span class="kl-pt">2 pts</span> &mdash; who can tame whom. Humans, quadrupeds, wild animals, water creatures, insects. Yes, your horoscope might be an insect.</li>
+        <li><strong>Tara</strong> <span class="kl-pt">3 pts</span> &mdash; count the nakshatras between the two moons, then count them the other way. Some counts are lucky. Some very much aren't.</li>
+        <li><strong>Yoni</strong> <span class="kl-pt">4 pts</span> &mdash; every nakshatra has an animal. This koot asks whether those two animals would, in the wild, eat each other.</li>
+        <li><strong>Graha Maitri</strong> <span class="kl-pt">5 pts</span> &mdash; friendship between the planets that rule each moon sign. The planets, like everyone else, have opinions about one another.</li>
+        <li><strong>Gana</strong> <span class="kl-pt">6 pts</span> &mdash; gods, humans, demons. Gods and demons don't get along.</li>
+        <li><strong>Bhakoot</strong> <span class="kl-pt">7 pts</span> &mdash; angular distance between the two moon signs. 2-12, 6-8, and opposite are the three arrangements the tradition calls bad news.</li>
+        <li><strong>Nadi</strong> <span class="kl-pt">8 pts</span> &mdash; three constitutional channels, roughly Ayurvedic. Same channel is the classic dealbreaker; even a good total score can't save it. This is <em>Nadi dosha</em>, and it is the line at which your family calls a pandit.</li>
+      </ul>
+
+      <h3>The math</h3>
+      <p>
+        Moon positions are computed from scratch with a truncated
+        Chapront-Touz&eacute; lunar series (Meeus,
+        <em>Astronomical Algorithms</em>, Ch. 47), with Lahiri ayanamsa
+        for the tropical-to-sidereal conversion. Accuracy is better
+        than 0.01&deg; of ecliptic longitude, which is negligible next
+        to the 3&deg;20' width of a nakshatra pada; in plainer words,
+        the Moon is in the right compartment. Scoring is ported
+        directly from the rules in B.V. Raman's <em>Hindu Predictive
+        Astrology</em>. No AI, no fuzzing, no fudging.
+      </p>
+
+      <h3>Birth data</h3>
+      <p>
+        Dates of birth are public. Times of birth mostly aren't, because
+        heads of state do not file birth times on Wikipedia. Every
+        legislator here is computed for 12:00 local time. The Moon
+        moves roughly 13&deg; per day, which is about one nakshatra per
+        day, so a noon chart lands the Moon in the correct nakshatra
+        on almost every day that isn't a boundary crossing. On a
+        boundary day, the person is genuinely a coin flip and the
+        tradition would agree. Rosters come from Wikipedia list
+        articles for the 18th Lok Sabha, the 119th US Congress, and
+        the 2024 UK general election, with missing DOBs backfilled via
+        Wikidata and Wikipedia infobox microformats.
+      </p>
+
+      <h3>Coverage</h3>
+      <p id="about-coverage">&nbsp;</p>
+
+      <h3>Code</h3>
+      <p>
+        Python for the astronomy and the scrapers; the Ashtakoot scorer
+        is ported to JavaScript so every pair in a 500-person house is
+        computed on demand in your browser. Nothing is pre-matched.
+        Everything is static, served from GitHub Pages, and will
+        cheerfully keep telling you whether the Speaker of the House
+        and the Chief Whip would have a good marriage.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<aside id="pair-panel" class="pair-panel" aria-hidden="true">
+  <button class="close-btn" id="close-pair" aria-label="close">&times;</button>
+  <div id="pair-content"></div>
+</aside>
+
+<div class="m-tip" id="m-tip"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="js/ashtakoot.js"></script>
+<script src="js/astro.js"></script>
+<script src="js/matrix.js"></script>
+<script src="js/pair.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+/* ==========================================================================
+   Pass 8: small-but-real interactions. The page reads quiet; fun arrives
+   when you touch things. No decorative animation. Real behaviors.
+   ========================================================================== */
+
+/* --- 1. Orbiter: tethered physics toy. Drag + fling + springs-back-to-orbit.
+        Rendered as a small accent-colored ringed dot (not a loud star). */
+(function(){
+  const el = document.getElementById('orbiter');
+  if(!el) return;
+
+  let cx = 0, cy = 0, R = 60;
+  let theta = -0.35, omega = 0.010;
+  let x = 0, y = 0, vx = 0, vy = 0;
+  let mode = 'orbit';
+  let dragDX = 0, dragDY = 0;
+  let lastMouseX = 0, lastMouseY = 0, lastT = 0;
+
+  function recenter(){
+    const logo = document.querySelector('.logo');
+    if(!logo) return;
+    const r = logo.getBoundingClientRect();
+    cx = r.left + r.width * 0.5;
+    cy = r.top + r.height * 0.5;
+    R = Math.min(70, Math.max(44, r.height * 1.4));
+  }
+  recenter();
+  window.addEventListener('resize', recenter);
+  window.addEventListener('scroll', recenter, { passive: true });
+
+  function setPos(px, py){
+    el.style.transform = `translate(${px - 17}px, ${py - 17}px) rotate(${theta * 30}deg)`;
+  }
+
+  function tick(){
+    if(mode === 'orbit'){
+      theta += omega;
+      omega += (0.010 - omega) * 0.02;
+      x = cx + Math.cos(theta) * R;
+      y = cy + Math.sin(theta) * R * 0.5;
+    } else if (mode === 'fling'){
+      x += vx; y += vy;
+      vx *= 0.96; vy *= 0.96;
+      vy += 0.22;
+      const dx = cx + Math.cos(theta) * R - x;
+      const dy = cy + Math.sin(theta) * R * 0.5 - y;
+      vx += dx * 0.008;
+      vy += dy * 0.008;
+      theta += 0.02;
+      if(Math.abs(vx) < 0.25 && Math.abs(vy) < 0.25 && Math.hypot(dx,dy) < 12){
+        mode = 'orbit';
+      }
+    }
+    setPos(x, y);
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+  function onDown(e){
+    const p = (e.touches && e.touches[0]) || e;
+    mode = 'drag';
+    const r = el.getBoundingClientRect();
+    dragDX = p.clientX - (r.left + r.width/2);
+    dragDY = p.clientY - (r.top + r.height/2);
+    lastMouseX = p.clientX; lastMouseY = p.clientY;
+    lastT = performance.now();
+    el.classList.add('grabbed');
+    e.preventDefault();
+  }
+  function onMove(e){
+    if(mode !== 'drag') return;
+    const p = (e.touches && e.touches[0]) || e;
+    x = p.clientX - dragDX;
+    y = p.clientY - dragDY;
+    const now = performance.now();
+    const dt = Math.max(8, now - lastT);
+    vx = (p.clientX - lastMouseX) * (16/dt);
+    vy = (p.clientY - lastMouseY) * (16/dt);
+    lastMouseX = p.clientX; lastMouseY = p.clientY; lastT = now;
+    theta += 0.05;
+  }
+  function onUp(){
+    if(mode !== 'drag') return;
+    mode = 'fling';
+    el.classList.remove('grabbed');
+  }
+  el.addEventListener('mousedown', onDown);
+  el.addEventListener('touchstart', onDown, { passive: false });
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('touchmove', onMove, { passive: false });
+  window.addEventListener('mouseup', onUp);
+  window.addEventListener('touchend', onUp);
+
+  let clickStartT = 0, clickStartX = 0, clickStartY = 0;
+  el.addEventListener('mousedown', (e) => {
+    clickStartT = performance.now(); clickStartX = e.clientX; clickStartY = e.clientY;
+  });
+  el.addEventListener('mouseup', (e) => {
+    const dt = performance.now() - clickStartT;
+    const d = Math.hypot(e.clientX - clickStartX, e.clientY - clickStartY);
+    if(dt < 220 && d < 4){
+      omega = 0.07 * (Math.random() > 0.5 ? 1 : -1);
+    }
+  });
+})();
+
+/* --- 2. Tab jiggle: a brief 320ms wobble when a tab is clicked. --------- */
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.classList.remove('jiggle');
+    // force reflow so the animation can re-trigger
+    void btn.offsetWidth;
+    btn.classList.add('jiggle');
+    setTimeout(() => btn.classList.remove('jiggle'), 360);
+  });
+});
+
+/* --- 3. Matrix cell micro-reactions: shake on near-zero hover, pulse on
+        near-max. Also tag filter cells that are actively filtering. */
+(function(){
+  // The matrix is (re)drawn by matrix.js; we listen via delegation.
+  const host = document.getElementById('matrix');
+  if(!host) return;
+  host.addEventListener('mouseover', (ev) => {
+    const cell = ev.target.closest('.matrix-cell');
+    if(!cell) return;
+    const fill = cell.getAttribute('fill') || '';
+    // matrix.js stores the score in a data-score attr (we'll add it).
+    const s = parseFloat(cell.getAttribute('data-score'));
+    if(isNaN(s)) return;
+    if(s <= 8 && !cell.classList.contains('nope')){
+      cell.classList.add('nope');
+      setTimeout(() => cell.classList.remove('nope'), 340);
+    } else if (s >= 30 && !cell.classList.contains('bliss')){
+      cell.classList.add('bliss');
+      setTimeout(() => cell.classList.remove('bliss'), 620);
+    }
+  });
+})();
+
+/* --- 4. Filter bar: mark cells as .is-active when the user picks
+        anything other than "all", and animate a sequential flyback
+        when the reset button is pressed. --------------------------------- */
+(function(){
+  function syncActive(){
+    document.querySelectorAll('.grid-controls .filter-cell').forEach(lbl => {
+      const sel = lbl.querySelector('select');
+      if(!sel) return;
+      lbl.classList.toggle('is-active', sel.value && sel.value !== 'all');
+    });
+  }
+  // Watch changes on any select in the filter bar
+  document.addEventListener('change', (ev) => {
+    if(ev.target && ev.target.closest && ev.target.closest('.grid-controls')){
+      syncActive();
+    }
+  });
+  // Initial sync after first draw
+  setTimeout(syncActive, 400);
+  setTimeout(syncActive, 1200);
+
+  const resetBtn = document.getElementById('filter-reset');
+  if(!resetBtn) return;
+  resetBtn.addEventListener('click', () => {
+    resetBtn.classList.remove('resetting');
+    void resetBtn.offsetWidth;
+    resetBtn.classList.add('resetting');
+    const cells = [...document.querySelectorAll('.grid-controls .filter-cell')];
+    cells.forEach((cell, i) => {
+      setTimeout(() => {
+        cell.classList.remove('flying');
+        void cell.offsetWidth;
+        cell.classList.add('flying');
+        setTimeout(() => cell.classList.remove('flying'), 360);
+      }, i * 55);
+    });
+    setTimeout(() => { resetBtn.classList.remove('resetting'); syncActive(); }, 500);
+    setTimeout(syncActive, 700);
+  });
+})();
+
+/* --- 5. Close-drawer "crumple": the × does a full spin-plus-scale bounce
+        every time you close the panel, just because. -------------------- */
+(function(){
+  const close = document.getElementById('close-pair');
+  if(!close) return;
+  close.addEventListener('click', () => {
+    close.classList.remove('crumple');
+    void close.offsetWidth;
+    close.classList.add('crumple');
+    setTimeout(() => close.classList.remove('crumple'), 460);
+  });
+})();
+
+/* --- 6. Panel-head celestial bodies: click to tumble. --------------------- */
+document.querySelectorAll('.ph-celestial').forEach(el => {
+  el.addEventListener('click', () => {
+    el.classList.remove('tumble');
+    void el.offsetWidth;
+    el.classList.add('tumble');
+    setTimeout(() => el.classList.remove('tumble'), 920);
+  });
+});
+
+/* --- 7. Logo sun: double-click to give it a quick wink (eyes + mouth
+        animate open). -------------------------------------------------- */
+(function(){
+  const sun = document.querySelector('.celestial-big-sun .sun-face');
+  if(!sun) return;
+  sun.parentElement.addEventListener('click', (ev) => {
+    // Only intercept when clicking directly on the sun illustration
+    ev.stopPropagation();
+    sun.classList.remove('winking');
+    void sun.getBoundingClientRect();
+    sun.classList.add('winking');
+    setTimeout(() => sun.classList.remove('winking'), 900);
+  });
+})();
+
+/* --- 8. Easter egg: tap the big pair-score 10 times; a small italic line
+        reveals itself just above the number. (The pair drawer re-renders
+        its content per pair, so delegate from the panel.) ---------------- */
+(function(){
+  const panel = document.getElementById('pair-panel');
+  if(!panel) return;
+  let count = 0, lastScoreEl = null;
+  panel.addEventListener('click', (ev) => {
+    const scoreEl = ev.target.closest('.pair-score');
+    if(!scoreEl) { count = 0; return; }
+    if(scoreEl !== lastScoreEl){ lastScoreEl = scoreEl; count = 0; }
+    count++;
+    if(count >= 10){
+      scoreEl.classList.add('revealed');
+      count = 0;
+    }
+  });
+  // Reset on panel close
+  document.getElementById('close-pair')?.addEventListener('click', () => {
+    count = 0; lastScoreEl = null;
+  });
+})();
+</script>
+
+</body>
+</html>

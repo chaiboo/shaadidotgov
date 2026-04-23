@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" data-country="IN">
+<head>
+  <meta charset="utf-8"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Rubik+Mono+One&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+<section class="tab-panel active" style="display:block">
+  <div class="panel-head">
+    <span class="ph-kicker"><span class="kk-dev">चन्द्र‑राशि&nbsp;—&nbsp;</span>05 &mdash; lunar demography</span>
+    <h2>Which signs <em>get elected?</em></h2>
+    <p class="panel-dek">Expected per sign ≈ 40; reality is not quite uniform.</p>
+  </div>
+  <div class="signs-layout">
+    <div id="signs-wheel" class="signs-wheel"></div>
+    <div id="signs-chart" class="sign-chart"></div>
+  </div>
+  <p class="caption" id="signs-caption"></p>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="js/ashtakoot.js"></script>
+<script src="js/astro.js"></script>
+<script>
+(async () => {
+  const IN = await fetch('data/country_IN.json').then(r => r.json());
+  const RASHI_ORDER = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+  const RASHI_DEV_SHORT = {Aries:'मेष',Taurus:'वृषभ',Gemini:'मिथुन',Cancer:'कर्क',Leo:'सिंह',Virgo:'कन्या',Libra:'तुला',Scorpio:'वृश्चिक',Sagittarius:'धनु',Capricorn:'मकर',Aquarius:'कुम्भ',Pisces:'मीन'};
+  const RASHI_GLYPH = {Aries:'♈',Taurus:'♉',Gemini:'♊',Cancer:'♋',Leo:'♌',Virgo:'♍',Libra:'♎',Scorpio:'♏',Sagittarius:'♐',Capricorn:'♑',Aquarius:'♒',Pisces:'♓'};
+  const count = Object.fromEntries(RASHI_ORDER.map(s=>[s,0]));
+  IN.people.forEach(p=>{count[p.moon_rashi_name]=(count[p.moon_rashi_name]||0)+1});
+  const total = IN.people.length, expected = total/12;
+  const maxCount = Math.max(...Object.values(count));
+  document.getElementById('signs-chart').innerHTML = RASHI_ORDER.map(s=>{
+    const n = count[s], h = Math.round((n/maxCount)*100);
+    const over = n>expected*1.2, under = n<expected*0.8;
+    const cls = over?'over':under?'under':'';
+    return `<div class="sign-col">
+      <div class="sign-bar-wrap">
+        <div class="sign-bar ${cls}" style="height:${h}%"></div>
+        <div class="sign-count">${n}</div>
+      </div>
+      <div class="sign-glyph">${RASHI_GLYPH[s]}</div>
+      <div class="sign-name">${s}<span class="dev">${RASHI_DEV_SHORT[s]||''}</span></div>
+    </div>`;
+  }).join('');
+  window.PK_astro.drawZodiacWheel(document.getElementById('signs-wheel'), count, total);
+})();
+</script>
+</body></html>

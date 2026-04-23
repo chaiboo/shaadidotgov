@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" data-country="IN">
+<head>
+  <meta charset="utf-8" />
+  <title>pair test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Rubik+Mono+One&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<aside id="pair-panel" class="pair-panel open" aria-hidden="false">
+  <button class="close-btn" id="close-pair">&times;</button>
+  <div id="pair-content"></div>
+</aside>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="js/ashtakoot.js"></script>
+<script src="js/astro.js"></script>
+<script src="js/pair.js"></script>
+<script>
+(async () => {
+  const cab = await fetch('data/kundlis.json').then(r => r.json());
+  const A = cab.people.find(p => p.name === 'Narendra Modi');
+  const B = cab.people.find(p => p.name === 'Rahul Gandhi');
+  const score = window.PK_ashtakoot.score(A, B);
+  window.PK_renderPair(A, B, score);
+})();
+</script>
+</body>
+</html>
