@@ -954,8 +954,23 @@
     pairs.sort((a, b) => b.total - a.total);
     document.getElementById('pair-total').textContent = pairs.length.toLocaleString();
 
-    const top = pairs.slice(0, 10);
-    const bot = pairs.slice(-10).reverse();
+    // Diversify: no person appears more than once per column.
+    // (Ashtakoot scores are driven by moon nakshatra, so a single person with
+    // an extreme nakshatra otherwise monopolises both the top and the bottom.)
+    function pickDistinct(source, count) {
+      const picked = [];
+      const seen = new Set();
+      for (const p of source) {
+        if (picked.length >= count) break;
+        if (seen.has(p.i) || seen.has(p.j)) continue;
+        picked.push(p);
+        seen.add(p.i);
+        seen.add(p.j);
+      }
+      return picked;
+    }
+    const top = pickDistinct(pairs, 10);
+    const bot = pickDistinct([...pairs].reverse(), 10);
     const render = (bucket) => bucket.map(p => {
       const a = people[p.i], b = people[p.j];
       // Pick a moon-sign glyph from one of the two (rotate so both are seen)
